@@ -9,8 +9,7 @@ r4d4 = np.zeros(20, dtype=np.int64)
 d10add10 = np.zeros(20, dtype=np.int64)
 r10d2 = np.zeros(20, dtype=np.int64)
 r20d1 = np.zeros(20, dtype=np.int64)
-#c20 = np.zeros(20, dtype=np.int64)
-flat10 = np.zeros(20,dtype=np.int64)
+flat10 = np.zeros(20, dtype=np.int64)
 
 for r1 in range(1, 7):
     for r2 in range(1, 7):
@@ -69,6 +68,7 @@ for r1 in range(2):
 for i in range(10):
     flat10[i] = 10
 
+
 fig, ax = plt.subplots()
 
 ax.plot(np.arange(1, 21, dtype=np.int64), d20, color='k', label='1d20')
@@ -81,7 +81,7 @@ ax.plot(np.arange(1, 21, dtype=np.int64), r10d2, color='b', label='10d2')
 ax.plot(np.arange(1, 21, dtype=np.int64), r20d1, color='c', label='20d1')
 ax.plot(np.arange(1, 21, dtype=np.int64), flat10, color='y', label='10')
 
-ax.set_title("Rolling methods")
+ax.set_title("Likelyhoods")
 ax.set_xlabel("Roll")
 ax.set_ylabel("Likelyhood")
 ax.set_xlim(1, 20)
@@ -89,4 +89,87 @@ ax.set_xticks(np.arange(1, 21, dtype=np.int64))
 ax.legend()
 
 fig.savefig("Likelyhood.pdf")
+plt.show()
+
+
+"""
+      DC 5  DC 10  DC 15  DC 20  DC 25  DC 30
+Lvl 1
+Lvl 4
+Lvl 5
+Lvl 8
+Lvl 9
+Lvl 13
+Lvl 17
+"""
+mods = [5, 6, 7, 8, 9, 10, 11]
+dcs = [5, 10, 15, 20, 25, 30]
+
+
+d20_skill = np.zeros((7, 6), dtype=np.float)
+r3d6_skill = np.zeros((7, 6), dtype=np.float)
+r2d10_skill = np.zeros((7, 6), dtype=np.float)
+r5d4_skill = np.zeros((7, 6), dtype=np.float)
+r4d4_skill = np.zeros((7, 6), dtype=np.float)
+d10add10_skill = np.zeros((7, 6), dtype=np.float)
+r10d2_skill = np.zeros((7, 6), dtype=np.float)
+r20d1_skill = np.zeros((7, 6), dtype=np.float)
+flat10_skill = np.zeros((7, 6), dtype=np.float)
+
+for mod in range(7):
+    for dc in range(6):
+        for roll in range(20):
+            if roll + mod >= dc and roll < dc:
+                d20_skill[mod][dc] += d20[roll]
+                r3d6_skill[mod][dc] += r3d6[roll]
+                r2d10_skill[mod][dc] += r2d10[roll]
+                r5d4_skill[mod][dc] += r5d4[roll]
+                r4d4_skill[mod][dc] += r4d4[roll]
+                d10add10_skill[mod][dc] += d10add10[roll]
+                r10d2_skill[mod][dc] += r10d2[roll]
+                r20d1_skill[mod][dc] += r20d1[roll]
+                flat10_skill[mod][dc] += flat10[roll]
+        d20_skill[mod][dc] /= sum(d20)
+        r3d6_skill[mod][dc] /= sum(r3d6)
+        r2d10_skill[mod][dc] /= sum(r2d10)
+        r5d4_skill[mod][dc] /= sum(r5d4)
+        r4d4_skill[mod][dc] /= sum(r4d4)
+        d10add10_skill[mod][dc] /= sum(d10add10)
+        r10d2_skill[mod][dc] /= sum(r10d2)
+        r20d1_skill[mod][dc] /= sum(r20d1)
+        flat10_skill[mod][dc] /= sum(flat10)
+
+fig2, ax2 = plt.subplot(3, 3)
+
+ax2[0, 0].plot(np.array(dcs), d20_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[0, 1].plot(np.array(dcs), r3d6_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[1, 0].plot(np.array(dcs), r2d10_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[2, 0].plot(np.array(dcs), r5d4_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[2, 1].plot(np.array(dcs), r4d4_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[1, 1].plot(np.array(dcs), d10add10, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[0, 2].plot(np.array(dcs), r10d2_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[2, 2].plot(np.array(dcs), r20d1_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+ax2[1, 2].plot(np.array(dcs), flat10_skill, color=['green', 'blue', 'cyan', 'purple', 'yellow', 'orange', 'red'], label=['level 1', 'level 4', 'level 5', 'level 8', 'level 9', 'level 13', 'level 17'])
+
+ax2.set_title('Effect of skills')
+ax2[0, 0].set_title("1d20")
+ax2[0, 1].set_title("3d6")
+ax2[1, 0].set_title("2d10")
+ax2[2, 0].set_title("5d4")
+ax2[2, 1].set_title("4d4")
+ax2[1, 1].set_title("1d10 + 10")
+ax2[0, 2].set_title("10d2")
+ax2[2, 2].set_title("20d1")
+ax2[1, 2].set_title("10")
+for i in range(3):
+    for j in range(3):
+        ax2[i, j].set_xlim(5, 30)
+        ax2[i, j].set_ylim(0, 1)
+        ax2[i, j].set_xticks(np.arange(5, 31, 5, dtype=np.int64))
+        ax2[i, j].set_yticks(np.arange(0, 1.1, .1, dtype=np.float))
+        ax2[i, j].set_xlabel('DC')
+        ax2[i, j].set_ylabel('Effect')
+        ax2[i, j].legend()
+
+fig2.savefig("Skill.pdf")
 plt.show()
