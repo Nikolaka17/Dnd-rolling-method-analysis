@@ -139,7 +139,7 @@ for mod in range(13):
         r20d1_skill[dc][mod] /= sum(r20d1)
         flat10_skill[dc][mod] /= sum(flat10)
 
-fig2, ax2 = plt.subplot(3, 3)
+fig2, ax2 = plt.subplots(3, 3)
 
 ax2[0, 0].plot(np.array(mods), d20_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
 ax2[0, 1].plot(np.array(mods), r3d6_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
@@ -172,4 +172,40 @@ for i in range(3):
         ax2[i, j].legend()
 
 fig2.savefig("Skill.pdf")
+plt.show()
+
+
+fig3, ax3 = plt.subplots(3, 3)
+
+ax3[0, 0].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - d20_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[0, 1].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - r3d6_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[1, 0].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - r2d10_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[2, 0].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - r5d4_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[2, 1].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - r4d4_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[1, 1].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - d10add10, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[0, 2].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - r10d2_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[2, 2].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - r20d1_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+ax3[1, 2].plot(np.array(mods), np.ones((6, 13), dtype=np.float) - flat10_skill, color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'])
+
+ax3.set_title('Effect of luck')
+ax3[0, 0].set_title("1d20")
+ax3[0, 1].set_title("3d6")
+ax3[1, 0].set_title("2d10")
+ax3[2, 0].set_title("5d4")
+ax3[2, 1].set_title("4d4")
+ax3[1, 1].set_title("1d10 + 10")
+ax3[0, 2].set_title("10d2")
+ax3[2, 2].set_title("20d1")
+ax3[1, 2].set_title("10")
+for i in range(3):
+    for j in range(3):
+        ax3[i, j].set_xlim(-1, 11)
+        ax3[i, j].set_ylim(0, 1)
+        ax3[i, j].set_xticks(np.arange(-1, 12, 1, dtype=np.int64))
+        ax3[i, j].set_yticks(np.arange(0, 1.1, .1, dtype=np.float))
+        ax3[i, j].set_xlabel('Modifier')
+        ax3[i, j].set_ylabel('Effect')
+        ax3[i, j].legend()
+
+fig3.savefig("Luck.pdf")
 plt.show()
