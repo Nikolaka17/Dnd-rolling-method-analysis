@@ -117,26 +117,26 @@ flat10_skill = np.zeros((6, 13), dtype=float)
 
 for mod in range(13):
     for dc in range(6):
-        for roll in range(20):
-            if roll + mod >= dc and roll < dc:
-                d20_skill[dc][mod] += d20[roll]
-                r3d6_skill[dc][mod] += r3d6[roll]
-                r2d10_skill[dc][mod] += r2d10[roll]
-                r5d4_skill[dc][mod] += r5d4[roll]
-                r4d4_skill[dc][mod] += r4d4[roll]
-                d10add10_skill[dc][mod] += d10add10[roll]
-                r10d2_skill[dc][mod] += r10d2[roll]
-                r20d1_skill[dc][mod] += r20d1[roll]
-                flat10_skill[dc][mod] += flat10[roll]
-        d20_skill[dc][mod] /= sum(d20)
-        r3d6_skill[dc][mod] /= sum(r3d6)
-        r2d10_skill[dc][mod] /= sum(r2d10)
-        r5d4_skill[dc][mod] /= sum(r5d4)
-        r4d4_skill[dc][mod] /= sum(r4d4)
-        d10add10_skill[dc][mod] /= sum(d10add10)
-        r10d2_skill[dc][mod] /= sum(r10d2)
-        r20d1_skill[dc][mod] /= sum(r20d1)
-        flat10_skill[dc][mod] /= sum(flat10)
+        for roll in range(1, 21):
+            if roll + mods[mod] >= dcs[dc] and roll < dcs[dc]:
+                d20_skill[dc][mod] += d20[roll - 1]
+                r3d6_skill[dc][mod] += r3d6[roll - 1]
+                r2d10_skill[dc][mod] += r2d10[roll - 1]
+                r5d4_skill[dc][mod] += r5d4[roll - 1]
+                r4d4_skill[dc][mod] += r4d4[roll - 1]
+                d10add10_skill[dc][mod] += d10add10[roll - 1]
+                r10d2_skill[dc][mod] += r10d2[roll - 1]
+                r20d1_skill[dc][mod] += r20d1[roll - 1]
+                flat10_skill[dc][mod] += flat10[roll - 1]
+        d20_skill[dc][mod] /= sum(sum(d20_skill)) if sum(sum(d20_skill)) != 0 else 1
+        r3d6_skill[dc][mod] /= sum(r3d6_skill[dc]) if sum(r3d6_skill[dc]) != 0 else 1
+        r2d10_skill[dc][mod] /= sum(r2d10_skill[dc]) if sum(r2d10_skill[dc]) != 0 else 1
+        r5d4_skill[dc][mod] /= sum(r5d4_skill[dc]) if sum(r5d4_skill[dc]) != 0 else 1
+        r4d4_skill[dc][mod] /= sum(r4d4_skill[dc] ) if sum(r4d4_skill[dc]) != 0 else 1
+        d10add10_skill[dc][mod] /= sum(d10add10_skill[dc]) if sum(d10add10_skill)[dc] != 0 else 1
+        r10d2_skill[dc][mod] /= sum(r10d2_skill[dc]) if sum(r10d2_skill[dc]) != 0 else 1
+        r20d1_skill[dc][mod] /= sum(r20d1_skill[dc]) if sum(r20d1_skill[dc]) != 0 else 1
+        flat10_skill[dc][mod] /= sum(flat10_skill[dc]) if sum(flat10_skill[dc]) != 0 else 1
 
 fig2, ax2 = plt.subplots(3, 3, figsize=(10, 10))
 
