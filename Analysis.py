@@ -174,18 +174,50 @@ fig2.savefig("Skill.pdf")
 plt.show()
 
 
+d20_rand = np.zeros((6, 13), dtype=float)
+r3d6_rand = np.zeros((6, 13), dtype=float)
+r2d10_rand = np.zeros((6, 13), dtype=float)
+r5d4_rand = np.zeros((6, 13), dtype=float)
+r4d4_rand = np.zeros((6, 13), dtype=float)
+d10add10_rand = np.zeros((6, 13), dtype=float)
+r10d2_rand = np.zeros((6, 13), dtype=float)
+r20d1_rand = np.zeros((6, 13), dtype=float)
+flat10_rand = np.zeros((6, 13), dtype=float)
+
+for dc in range(6):
+    for mod in range(13):
+        for i in range(dcs[dc] if mods[mod] != -1 else dcs[dc] + 1, 21):
+            d20_rand[dc][mod] += d20[i - 1]
+            r3d6_rand[dc][mod] += r3d6[i - 1]
+            r2d10_rand[dc][mod] += r2d10[i - 1]
+            r5d4_rand[dc][mod] += r5d4[i - 1]
+            r4d4_rand[dc][mod] += r4d4[i - 1]
+            d10add10_rand[dc][mod] += d10add10[i - 1]
+            r10d2_rand[dc][mod] += r10d2[i - 1]
+            r20d1_rand[dc][mod] += r20d1[i - 1]
+            flat10_rand[dc][mod] += flat10[i - 1]
+        d20_rand[dc][mod] /= sum(d20)
+        r3d6_rand[dc][mod] /= sum(r3d6)
+        r2d10_rand[dc][mod] /= sum(r2d10)
+        r5d4_rand[dc][mod] /= sum(r5d4)
+        r4d4_rand[dc][mod] /= sum(r4d4)
+        d10add10_rand[dc][mod] /= sum(d10add10)
+        r10d2_rand[dc][mod] /= sum(r10d2)
+        r20d1_rand[dc][mod] /= sum(r20d1)
+        flat10_rand[dc][mod] /= sum(flat10)
+
 fig3, ax3 = plt.subplots(3, 3, figsize=(10, 10))
 
 for i in range(6):
-    ax3[0][0].plot(np.array(mods), np.ones(13, dtype=float) - d20_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[0][1].plot(np.array(mods), np.ones(13, dtype=float) - r3d6_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[1][0].plot(np.array(mods), np.ones(13, dtype=float) - r2d10_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[2][0].plot(np.array(mods), np.ones(13, dtype=float) - r5d4_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[2][1].plot(np.array(mods), np.ones(13, dtype=float) - r4d4_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[1][1].plot(np.array(mods), np.ones(13, dtype=float) - d10add10_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[0][2].plot(np.array(mods), np.ones(13, dtype=float) - r10d2_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[2][2].plot(np.array(mods), np.ones(13, dtype=float) - r20d1_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
-    ax3[1][2].plot(np.array(mods), np.ones(13, dtype=float) - flat10_skill[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[0][0].plot(d20_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[0][1].plot(r3d6_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[1][0].plot(r2d10_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[2][0].plot(r5d4_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[2][1].plot(r4d4_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[1][1].plot(d10add10_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[0][2].plot(r10d2_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[2][2].plot(r20d1_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
+    ax3[1][2].plot(flat10_rand[i], color=['green', 'blue', 'purple', 'yellow', 'orange', 'red'][i], label=['DC 5', 'DC 10', 'DC 15', 'DC 20', 'DC 25', 'DC 30'][i])
 
 ax3[0][0].set_title("1d20")
 ax3[0][1].set_title("3d6")
