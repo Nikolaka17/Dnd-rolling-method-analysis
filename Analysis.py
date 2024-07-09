@@ -117,7 +117,7 @@ flat10_skill = np.zeros((6, 13), dtype=float)
 
 for mod in range(2, 13):
     for dc in range(6):
-        for i in range(dcs[dc] - 1, max(dcs[dc] - mods[mod], 1), -1):
+        for i in range(min(dcs[dc] - 1, 20), max(dcs[dc] - mods[mod], 1), -1):
             d20_skill[dc][mod] += d20[i - 1]
             r3d6_skill[dc][mod] += r3d6[i - 1]
             r2d10_skill[dc][mod] += r2d10[i - 1]
